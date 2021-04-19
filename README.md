@@ -12,10 +12,11 @@
 
 ## Features
 
-* Simple proof-of-work algorithm
+* Proof-of-stake algorithm
 * Verify blockchain (to prevent tampering)
 * Generate wallet (private/public key)
 * Sign transactions
+* P2P Enabled
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
