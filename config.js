@@ -1,0 +1,15 @@
+  
+const TOTAL_COINS = 200;
+
+const TRANSACTION_THRESHOLD = 5;
+
+const FIRST_LEADER = "";
+
+const TRANSACTION_FEE = 1;
+
+module.exports = {
+  TOTAL_COINS,
+  TRANSACTION_THRESHOLD,
+  FIRST_LEADER,
+  TRANSACTION_FEE
+};
