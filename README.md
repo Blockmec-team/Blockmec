@@ -24,47 +24,46 @@
 npm install --save blockmec
 ```
 
-### Generate a keypair
-To make transactions on this blockchain you need a keypair. The public key becomes your wallet address and the private key is used to sign transactions.
+## API Reference
 
-```js
-const EC = require('elliptic').ec;
-const ec = new EC('secp256k1');
+### Nodes
 
-const myKey = ec.genKeyPair();
+#### POST /transact
+Send transactions
+
+##### Body `json`
+```json
+{
+    "to":"Address",
+    "amount":Number,
+    "type": "TRANSACTION" | "STAKE" | "VALIDATOR_FEE"
+}
 ```
 
-The `myKey` object now contains your public & private key:
+#### GET /transactions
+Returns the content of the transaction pool
 
-```js
-console.log('Public key:', myKey.getPublic('hex'));
-console.log('Private key:', myKey.getPrivate('hex'));
-```
+#### GET /public-key
+Returns the public-key of the node
 
-### Create a blockchain instance
-Now you can create a new instance of a Blockchain:
-
-```js
-const {Blockchain, Transaction} = require('savjeecoin');
-
-const myChain = new Blockchain();
-```
-
-### Adding transactions
-```js
-// Transfer 100 coins from my wallet to "toAddress"
-const tx = new Transaction(myKey.getPublic('hex'), 'toAddress', 100);
-tx.signTransaction(myKey);
-
-myChain.addTransaction(tx);
-```
-
-To finalize this transaction, we have to mine a new block. We give this method our wallet address because we will receive a mining reward:
-
-```js
-myChain.minePendingTransactions(myKey.getPublic('hex'));
-```
+#### GET /balance
+Returns the balance of the node
 
 
----
+## Start system
+
+1. Run a few nodes with different HTTP and Socket Ports
+    
+    1st Node
+    ```
+    HTTP_PORT=3001 P2P_PORT=5001 npm run dev
+    ```
+    2nd Node - add the 1st node as peer
+    ```
+    HTTP_PORT=3002 P2P_PORT=5002 PEERS=wc://localhost:5001 npm run dev
+    ```
+
+    3rd Node - add the 1st and 2nd node as peer
+    ```
+    HTTP_PORT=3003 P2P_PORT=5003 PEERS=wc://localhost:5001,wc://localhost:5002 npm run dev
 
